@@ -40,7 +40,7 @@ int main() {
                 tieneSimbolo = true;
             }
 
-            // Analizar solo el primer car·cter
+            // Analizar solo el primer car√°cter
             if (x == 0) {
                 if (isalpha(c)) iniciaConLetra = true;
                 else if (isdigit(c)) iniciaConNumero = true;
@@ -50,11 +50,11 @@ int main() {
 ////////////////////////////////////////////////////////////////////////////////////////////////
         cout << "\nClasificacion del token:\n";
 
-        // 1. N˙mero v·lido
+        // 1. N√∫mero v√°lido
         if (tieneNumero && !tieneLetra && !tieneSimbolo) {
             cout << "Es un NUMERO valido\n";
         }
-        // 2. N˙mero mal declarado
+        // 2. N√∫mero mal declarado
         else if (iniciaConNumero && (tieneLetra || tieneSimbolo)) {
             cout << "Es un NUMERO mal declarado\n";
         }
@@ -80,4 +80,5 @@ int main() {
 
     return 0;
 }
+
 
