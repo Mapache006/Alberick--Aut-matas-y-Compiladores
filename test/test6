@@ -1,0 +1,15 @@
+%option noyywrap
+%{
+	#include<stdio.h>
+
+%}
+
+%%
+[a-zA-Z0-9._%+-]+@uaeh.edu.mx   { printf("reconocido como Correo institucional\n");}
+%%
+
+int main()
+{ 
+
+	return yylex();
+}
