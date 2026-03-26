@@ -1,0 +1,16 @@
+Palabra Reservada
+Identificador
+Operador
+Entero
+Separador
+Palabra Reservada
+Identificador
+Operador
+Flotante
+Separador
+String
+Hexadecimal
+Binario
+Operador
+Operador
+Identificador

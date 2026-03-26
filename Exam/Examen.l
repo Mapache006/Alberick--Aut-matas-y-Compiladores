@@ -1,0 +1,93 @@
+
+%option noyywrap
+%{
+	#include<stdio.h>
+	FILE *MyScanner;
+	extern FILE *yyin;
+%}
+
+%%
+
+[ \t\n]+                { }
+
+\"([^\\\"]|\\.)*\"         { fprintf(MyScanner,"String\n"); }
+\'([^\\\']|\\.)\'         { fprintf(MyScanner,"Char\n"); }
+
+0[xX][0-9a-fA-F]+       { fprintf(MyScanner,"Hexadecimal\n"); }
+0[bB][01]+              { fprintf(MyScanner,"Binario\n"); }
+0[0-7]+                 { fprintf(MyScanner,"Octal\n"); }
+
+[0-9]+\.[0-9]+([eE][+-]?[0-9]+)?	{ fprintf(MyScanner,"Flotante\n"); }
+[0-9]+					{ fprintf(MyScanner,"Entero\n"); }
+
+(int|float|double|char|void|if|else|switch|case|for|while|do|break|continue|return|class|struct|public|private|protected|new|delete|try|catch|throw|namespace|using)  { fprintf(MyScanner,"Palabra Reservada\n"); }
+
+[a-zA-Z_][a-zA-Z0-9_]*  { fprintf(MyScanner,"Identificador\n");}
+
+"++"  { fprintf(MyScanner,"Operador\n"); }
+"--"  { fprintf(MyScanner,"Operador\n"); }
+"=="  { fprintf(MyScanner,"Operador\n"); }
+"!="  { fprintf(MyScanner,"Operador\n"); }
+"<="  { fprintf(MyScanner,"Operador\n"); }
+">="  { fprintf(MyScanner,"Operador\n"); }
+"&&"  { fprintf(MyScanner,"Operador\n"); }
+"||"  { fprintf(MyScanner,"Operador\n"); }
+"<<"  { fprintf(MyScanner,"Operador\n"); }
+">>"  { fprintf(MyScanner,"Operador\n"); }
+
+"+="  { fprintf(MyScanner,"Operador\n"); }
+"-="  { fprintf(MyScanner,"Operador\n"); }
+"*="  { fprintf(MyScanner,"Operador\n"); }
+"/="  { fprintf(MyScanner,"Operador\n"); }
+
+"+"   { fprintf(MyScanner,"Operador\n"); }
+"-"   { fprintf(MyScanner,"Operador\n"); }
+"*"   { fprintf(MyScanner,"Operador\n"); }
+"/"   { fprintf(MyScanner,"Operador\n"); }
+"%"   { fprintf(MyScanner,"Operador\n"); }
+"="   { fprintf(MyScanner,"Operador\n"); }
+"<"   { fprintf(MyScanner,"Operador\n"); }
+">"   { fprintf(MyScanner,"Operador\n"); }
+"!"   { fprintf(MyScanner,"Operador\n"); }
+"&"   { fprintf(MyScanner,"Operador\n"); }
+"|"   { fprintf(MyScanner,"Operador\n"); }
+"^"   { fprintf(MyScanner,"Operador\n"); }
+"~"   { fprintf(MyScanner,"Operador\n"); }
+
+
+(\(|\)|\{|\}|\[|\]|;|,|\.|:)  {fprintf(MyScanner,"Separador\n"); }
+
+%%
+
+
+int main() {
+    FILE *EntradaDTS;
+
+    EntradaDTS = fopen("C:/Flex Windows/EditPlusPortable/EntradaDTS.cpp", "r");
+    if (EntradaDTS == NULL) {
+        printf("No existe Entrada.cpp\n");
+        return 1;
+    }
+
+    MyScanner = fopen("C:/Flex Windows/EditPlusPortable/MyScanner.txt", "w");
+    if (MyScanner == NULL) {
+        printf("No se pudo crear MyScanner.txt\n");
+        return 1;
+    }
+
+    yyin = EntradaDTS;
+
+    yylex();
+
+    fclose(EntradaDTS);
+    fclose(MyScanner);
+
+    printf("Listo. Revisa MyScanner.txt\n");
+	system("notepad MyScanner.txt");
+    return 0;
+    
+}
+
+
+
+
