@@ -1,0 +1,206 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage[absolute,overlay]{textpos}
+\setlength{\parindent}{0pt}
+\usepackage{geometry}
+\geometry{top=1in, bottom=1in, right=1in, left=1in}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage[pages=some]{background}
+
+\usepackage{listings}
+\usepackage{xcolor}
+
+\pagestyle{empty}
+
+\backgroundsetup{
+  scale=1,
+  opacity=1,
+  angle=0,
+  contents={\includegraphics[width=\paperwidth,height=\paperheight]{imagenes/portada.jpg}}
+}
+
+\usepackage{xcolor}
+\definecolor{rojo}{rgb}{0.8, 0, 0}
+
+\usepackage{titlesec}
+
+
+\titleformat{\section}
+  {\color{rojo}\Large\bfseries}
+  {}
+  {0pt}
+  {}
+
+\titleformat{\subsection}
+  {\color{rojo}\large\bfseries}
+  {}
+  {0pt}
+  {}
+
+\begin{document}
+\BgThispage
+\-
+\begin{textblock*}{15cm}(4cm, 9cm)
+    {\fontsize{30pt}{16pt}\selectfont
+    \textcolor{rojo}{\textbf{REPORTE DE PRÁCTICA NO. 3}}
+    }
+\end{textblock*}
+\begin{textblock*}{15cm}(4cm, 11cm)
+    {\fontsize{15pt}{16pt}\selectfont
+    \textcolor{rojo}{\textbf{NOMBRE DE LA PRÁCTICA}}
+    }
+\end{textblock*}
+\begin{textblock*}{15cm}(4cm, 12cm)
+    {\fontsize{13pt}{16pt}\selectfont
+    \textcolor{rojo}{\textbf{ALUMNO: Vite Juarez Alberick}}
+    }
+\end{textblock*}
+\begin{textblock*}{15cm}(6cm, 12.5cm)
+    {\fontsize{11pt}{16pt}\selectfont
+    \textcolor{rojo}{\textbf{Dr. Eduardo Cornejo-Velázquez}}
+    }
+\end{textblock*}
+
+\newpage
+
+\section{1. Introducción}
+En la presente práctica se implementó un Autómata Finito Determinista (AFD) utilizando el lenguaje de programación C++. El objetivo fue simular el comportamiento de un autómata mediante estructuras de datos que permitan representar estados, transiciones y condiciones de aceptación.
+
+El uso de AFD es fundamental en áreas como compiladores, validación de cadenas y diseño de analizadores léxicos, ya que permiten modelar formalmente lenguajes regulares y procesar cadenas de entrada de manera eficiente.
+
+
+
+
+\section{2. Marco teórico}
+
+\subsection{Autómata Finito Determinista (AFD)}
+Un Autómata Finito Determinista es un modelo matemático definido por una 5-tupla $(Q, \Sigma, \delta, q_0, F)$, donde:
+\begin{itemize}
+    \item $Q$ es el conjunto de estados
+    \item $\Sigma$ es el alfabeto
+    \item $\delta$ es la función de transición
+    \item $q_0$ es el estado inicial
+    \item $F$ es el conjunto de estados de aceptación
+\end{itemize}
+
+\subsection{Función de transición}
+La función $\delta$ define el cambio de estado en función del estado actual y el símbolo de entrada:
+\[
+\delta(q, a) = q'
+\]
+
+\subsection{Lenguajes regulares}
+Los AFD permiten reconocer lenguajes regulares, los cuales pueden definirse mediante expresiones regulares o gramáticas formales.
+
+\subsection{Implementación en C++}
+En esta práctica se utilizaron estructuras como \texttt{map} y \texttt{set} para representar las transiciones y estados finales respectivamente, permitiendo simular el comportamiento del autómata.
+\newpage
+    
+\section{3. Herramientas empleadas}
+\begin{enumerate}
+    \item Dev-C++: Entorno de desarrollo para la programación en C++.
+    \item Compilador MinGW: Utilizado para la compilación del código fuente.
+    \item Lenguaje C++: Lenguaje de programación utilizado para implementar el AFD.
+\end{enumerate}
+
+    
+\section{4. Desarrollo}
+
+\subsection{Definición del AFD}
+El autómata implementado cuenta con las siguientes características:
+
+\begin{itemize}
+    \item Estado inicial: $q_0 = 1$
+    \item Estados finales: $\{2\}$
+    \item Alfabeto: $\{0,1\}$
+\end{itemize}
+
+\subsection{Función de transición}
+
+\[
+\delta(1,0)=1,\quad \delta(1,1)=2
+\]
+\[
+\delta(2,0)=3,\quad \delta(2,1)=2
+\]
+\[
+\delta(3,0)=2,\quad \delta(3,1)=2
+\]
+
+\subsection{Descripción del funcionamiento}
+El programa solicita al usuario una cadena de entrada. Posteriormente:
+\begin{enumerate}
+    \item Inicia en el estado inicial.
+    \item Procesa cada símbolo de la cadena.
+    \item Cambia de estado según la función de transición.
+    \item Verifica si el estado final pertenece al conjunto de aceptación.
+\end{enumerate}
+
+\subsection{Código implementado}
+
+\begin{lstlisting}[language=C++, caption=Implementación del AFD en C++]
+#include <iostream>
+#include <map>
+#include <set>
+using namespace std;
+
+int main() {
+    int q0 = 1;
+    set<int> finales;
+    finales.insert(2);
+
+    map<int, map<char, int> > transiciones;
+
+    transiciones[1]['0'] = 1;
+    transiciones[1]['1'] = 2;
+
+    transiciones[2]['1'] = 2;
+    transiciones[2]['0'] = 3;
+
+    transiciones[3]['0'] = 2;
+    transiciones[3]['1'] = 2;
+
+    while (true) {
+        string W;
+        cout << "Cadena (o salir): ";
+        cin >> W;
+
+        if (W == "salir") break;
+
+        int estado_actual = q0;
+        bool valida = true;
+
+        for (int i = 0; i < W.length(); i++) {
+            char c = W[i];
+
+            if (transiciones[estado_actual].count(c)) {
+                estado_actual = transiciones[estado_actual][c];
+            } else {
+                valida = false;
+                break;
+            }
+        }
+
+        if (valida && finales.count(estado_actual)) {
+            cout << "ACEPTADA\n";
+        } else {
+            cout << "RECHAZADA\n";
+        }
+    }
+
+    return 0;
+}
+\end{lstlisting}
+
+\newpage
+    
+\section{5. Conclusiones}
+    En esta práctica se logró implementar un Autómata Finito Determinista en C++, reforzando los conocimientos sobre teoría de autómatas y su aplicación en programación.
+
+    :D
+    
+    \newpage
+    
+
+\end{document}
