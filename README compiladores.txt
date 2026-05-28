@@ -1,0 +1,3 @@
+Para que el codigo funcione requiere de los 4 documentos, el documento que contiene los RFC,INE y CURP de prueba y el de Salida. a travez de estos se hace la lectura y escritura (en caso del TxTsalida), el codigo los lee con una libreria y los analiza renglon a renglon, cada renglon lo hace string y valida simbolo a simbolo por posicion, si no tiene errores lo regresa como valido si falla una condicion se vuelve invalido.
+
+en caso de descargarlos deben estar todos en la misma ubicacion o de lo contrario debera de cambiar el nombre del archivo a la ruta del archivo.
